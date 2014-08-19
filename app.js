@@ -7,7 +7,7 @@ var request = require('request');
 var queue = {};
 var host = 'http://media.movideo.us';
 var urlMod = require('url');
-//var resolveUrl = urlMod.resolve;
+var resolveUrl = urlMod.resolve;
 var _ = require('lodash');
 var md5 = function (str) {
     return crypto.createHash('md5').update(str).digest('hex');
