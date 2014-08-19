@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "lodash": "^2.4.1",
     "nginxparser": "^1.1.0",
     "request": "^2.40.0",
     "tail": "^0.3.7"
