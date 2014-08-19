@@ -65,9 +65,9 @@ var processUrl = function (requestUrl) {
         var mydir = path.dirname(myurl);
         var urlmd5 = md5(mydir);
         if (!queue[urlmd5]) {
-            console.log('myurl:' + myurl);
+            console.log('processUrl:' + myurl);
             var origurl = host + myurl;
-            processPlaylist(origurl);
+//            processPlaylist(origurl);
         }
     }
 }
@@ -83,7 +83,7 @@ tail.on("line", function (data) {
             if (requestArr[0] == 'GET') {
                 var path = requestArr[1];
                 console.log(path);
-//                processUrl(path);
+                processUrl(path);
             }
         }
     })
