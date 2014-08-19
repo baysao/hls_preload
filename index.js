@@ -21,8 +21,6 @@ if (cluster.isMaster) {
 }
 // Listen for dying workers
 cluster.on('exit', function (worker) {
-
     console.log('Worker ' + worker.id + ' died :(');
     cluster.fork();
-
 });
