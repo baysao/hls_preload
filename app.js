@@ -35,6 +35,14 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 //        }
 //    });
 //}
+var processTS = function(myurls){
+    var url = myurls[0];
+    console.log('processTS:' + url);
+    request(url, function (err, response) {
+        myurls.splice(0,1);
+        processTS(myurls);
+    })
+}
 var processPlaylist = function (playlistUrl) {
     console.log('processPlaylist:' + playlistUrl);
     request(playlistUrl, function (error, response, body) {
@@ -45,14 +53,11 @@ var processPlaylist = function (playlistUrl) {
                 return resolveUrl(playlistUrl, line);
             });
             var myurls = _.compact(urls);
-            _.each(myurls, function(url){
-                console.log(url);
-                setTimeout(function(){
-                    request(url, function (err, response) {
-                    })
-                },2000);
-
-            });
+            processTS(myurls);
+//            _.each(myurls, function (url) {
+//                console.log(url);
+//
+//            });
         }
     })
 
