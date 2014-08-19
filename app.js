@@ -9,17 +9,32 @@ var md5 = function (str) {
     return crypto.createHash('md5').update(str).digest('hex');
 };
 
-Tail = require('tail').Tail;
 
-tail = new Tail("/home/log/nginx/access/media.m3u8.movideo.access.log");
+var NginxParser = require('nginxparser');
 
-tail.on("line", function(data) {
-    console.log(data);
+var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
+    + '"$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"');
+
+parser.read("/home/log/nginx/access/media.m3u8.movideo.access.log",  { tail: true }, function (row) {
+    console.log(row);
+}, function (err) {
+    if (err) throw err;
+    console.log('Done!')
 });
 
-tail.on("error", function(error) {
-    console.log('ERROR: ', error);
-});
+
+//
+//Tail = require('tail').Tail;
+//
+//tail = new Tail("/home/log/nginx/access/media.m3u8.movideo.access.log");
+//
+//tail.on("line", function(data) {
+//    console.log(data);
+//});
+//
+//tail.on("error", function(error) {
+//    console.log('ERROR: ', error);
+//});
 
 
 //var server = http.createServer(function (request, response) {
