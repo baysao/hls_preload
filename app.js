@@ -40,7 +40,7 @@ var next = function(myurls){
         myurls.splice(0, 1);
         if (myurls && myurls.length > 0)
             processTS(myurls);
-    },5000);
+    },2000);
 }
 var processTS = function (myurls) {
     var url = myurls[0];
