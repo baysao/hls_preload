@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-//    "hls-buffer": "^0.1.5",
     "tail": "^0.3.7"
   },
   "devDependencies": {},
