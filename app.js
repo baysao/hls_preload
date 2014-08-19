@@ -19,12 +19,12 @@ var NginxParser = require('nginxparser');
 var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
     + '"$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"');
 
-//var processTS = function (urls) {
-//    console.log('processTS');
-//    var url = urls[0];
-//    console.log('url:' + url);
-//    urls.splice(0,1);
-//    processTS(urls);
+var processTS = function (urls) {
+    console.log('processTS');
+    var url = urls[0];
+    console.log('url:' + url);
+    urls.splice(0,1);
+    processTS(urls);
 //    request(url, function (err, response) {
 //        if (err || response.statusCode !== 200) return;
 //        urls.splice(0, 1);
@@ -34,7 +34,7 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 //            }, 2000);
 //        }
 //    });
-//}
+}
 var processPlaylist = function (playlistUrl) {
     console.log('processPlaylist:' + playlistUrl);
     request(playlistUrl, function (error, response, body) {
@@ -45,10 +45,7 @@ var processPlaylist = function (playlistUrl) {
                 return resolveUrl(playlistUrl, line);
             });
             var myurls = _.compact(urls);
-            _.each(myurls, function (url) {
-                request(url, function (err, response) {
-                })
-            })
+            processTS(myurls);
         }
     })
 
