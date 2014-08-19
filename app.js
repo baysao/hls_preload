@@ -24,8 +24,8 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 //
 
 
-var processUrl = function (url) {
-    var myurl = url.parse(url).pathname;
+var processUrl = function (requestUrl) {
+    var myurl = url.parse(requestUrl).pathname;
     console.log('myurl:' + myurl);
     if (/\.m3u8$/.test(myurl)) {
         var mydir = path.dirname(myurl);
