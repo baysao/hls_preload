@@ -37,8 +37,9 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 //}
 var processPlaylist = function (playlistUrl) {
     console.log('processPlaylist:' + playlistUrl);
-//    request(playlistUrl, function (err, response) {
-//        if (err || response.statusCode !== 200) return;
+    request(playlistUrl, function (err, response) {
+        console.log('done request:' + playlistUrl);
+        if (err || response.statusCode !== 200) return false;
 //
 //        var body = response.body.toString().trim();
 //
@@ -56,7 +57,7 @@ var processPlaylist = function (playlistUrl) {
 //        console.log(myurls[0]);
 //        console.log(myurls.length);
 ////        processTS(myurls);
-//    });
+    });
 }
 var processUrl = function (requestUrl) {
     var myurl = url.parse(requestUrl).pathname;
