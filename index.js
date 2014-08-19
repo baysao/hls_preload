@@ -6,7 +6,7 @@ if (cluster.isMaster) {
     console.log("Master started.")
     // Count the machine's CPUs
     var cpuCount = require('os').cpus().length;
-    cpuCount = (cpuCount > 4)? 4: cpuCount;
+//    cpuCount = (cpuCount > 4)? 4: cpuCount;
     // Create a worker for each CPU
     for (var i = 0; i < cpuCount; i += 1) {
         cluster.fork();
