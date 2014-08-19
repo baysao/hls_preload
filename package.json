@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "nginxparser": "^1.1.0",
+    "request": "^2.40.0",
     "tail": "^0.3.7"
   },
   "devDependencies": {},
