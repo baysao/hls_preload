@@ -19,7 +19,7 @@ var server = http.createServer(function (request, response) {
         var urlmd5 = md5(mydir);
         console.log(myurl);
         console.log(urlmd5);
-        queue[urlmd5] = hls(myurl);
+        queue[urlmd5] = hls(myurl, {max:2});
         queue[urlmd5].playlist(function (err, pl) {
             response.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
             response.end(pl);
