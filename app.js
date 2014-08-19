@@ -20,14 +20,15 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
     + '"$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"');
 
 var processTS = function (urls) {
+    console.log('processTS');
     var url = urls[0];
     console.log('url:' + url);
     request(url, function (err, response) {
         if (err || response.statusCode !== 200) return;
-        var urls = urls.splice(0, 1);
-        if (urls.length > 0) {
+        var myurls = urls.splice(0, 1);
+        if (myurls.length > 0) {
             setTimeout(function () {
-                processTS(urls);
+                processTS(myurls);
             }, 2000);
         }
     });
