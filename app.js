@@ -73,6 +73,7 @@ var processUrl = function (requestUrl) {
         var mydir = path.dirname(myurl);
         var urlmd5 = md5(mydir);
         if (!queue[urlmd5]) {
+            queue[urlmd5] = 1;
             console.log('processUrl:' + myurl);
             var origurl = host + myurl;
             processPlaylist(origurl);
