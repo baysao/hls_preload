@@ -35,12 +35,13 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 //        }
 //    });
 //}
-var processTS = function(myurls){
+var processTS = function (myurls) {
     var url = myurls[0];
     console.log('processTS:' + url);
     request(url, function (err, response) {
-        myurls.splice(0,1);
-        processTS(myurls);
+        myurls.splice(0, 1);
+        if (myurls && myurls.length > 0)
+            processTS(myurls);
     })
 }
 var processPlaylist = function (playlistUrl) {
