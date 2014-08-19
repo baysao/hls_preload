@@ -23,15 +23,17 @@ var processTS = function (urls) {
     console.log('processTS');
     var url = urls[0];
     console.log('url:' + url);
-    request(url, function (err, response) {
-        if (err || response.statusCode !== 200) return;
-        urls.splice(0, 1);
-        if (urls.length > 0) {
-            setTimeout(function () {
-                processTS(urls);
-            }, 2000);
-        }
-    });
+    urls.splice(0,1);
+    processTS(urls);
+//    request(url, function (err, response) {
+//        if (err || response.statusCode !== 200) return;
+//        urls.splice(0, 1);
+//        if (urls.length > 0) {
+//            setTimeout(function () {
+//                processTS(urls);
+//            }, 2000);
+//        }
+//    });
 }
 var processPlaylist = function (playlistUrl) {
     console.log('processPlaylist:' + playlistUrl);
