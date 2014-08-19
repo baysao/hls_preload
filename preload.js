@@ -11,22 +11,22 @@ var md5 = function (str) {
 
 
 var server = http.createServer(function (request, response) {
-    console.log('request.url:' + request.url);
-
-    if (/\.m3u8$/.test(request.url)) {
-        var myurl = 'http://media.movideo.us' + request.url;
-        var mydir = path.dirname(url.parse(myurl).path);
+    var myurl = url.parse(request.url).pathname;
+    console.log('request.url:' + myurl);
+    if (/\.m3u8$/.test(myurl)) {
+        var origurl = 'http://media.movideo.us' + myurl;
+        var mydir = path.dirname(myurl);
         var urlmd5 = md5(mydir);
         console.log(myurl);
         console.log(urlmd5);
-        queue[urlmd5] = hls(myurl, {max:2});
+        queue[urlmd5] = hls(origurl, {max:2});
         queue[urlmd5].playlist(function (err, pl) {
             response.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
             response.end(pl);
         });
     }
     else {
-        var mydir = path.dirname(request.url);
+        var mydir = path.dirname(myurl);
         var urlmd5 = md5(mydir);
         // else return the linked segment
         var stream = queue[urlmd5].segment(request.url);
