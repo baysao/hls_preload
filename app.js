@@ -1,5 +1,4 @@
 var hls = require('hls-buffer');
-//var buffer = hls('http://media.movideo.us/2014/08/18/Nightfall_2012/playlist.m3u8');
 var http = require('http');
 var crypto = require('crypto');
 var path = require('path');
