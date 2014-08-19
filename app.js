@@ -26,12 +26,13 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 
 var processUrl = function (requestUrl) {
     var myurl = url.parse(requestUrl).pathname;
-    console.log('myurl:' + myurl);
-    return;
+
     if (/\.m3u8$/.test(myurl)) {
+
         var mydir = path.dirname(myurl);
         var urlmd5 = md5(mydir);
         if (!queue[urlmd5]) {
+            console.log('myurl:' + myurl);
             var origurl = host + myurl;
             queue[urlmd5] = hls(origurl);
         }
