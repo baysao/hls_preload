@@ -35,14 +35,21 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 //        }
 //    });
 //}
+var next = function(myurls){
+    myurls.splice(0, 1);
+    if (myurls && myurls.length > 0)
+        processTS(myurls);
+}
 var processTS = function (myurls) {
     var url = myurls[0];
-    console.log('processTS:' + url);
-    request(url, function (err, response) {
-        myurls.splice(0, 1);
-        if (myurls && myurls.length > 0)
-            processTS(myurls);
-    })
+    if(/\.ts$/.test(url)) {
+        console.log('processTS:' + url);
+        request(url, function (err, response) {
+            next(myurls);
+        })
+    } else {
+        next(myurls);
+    }
 }
 var processPlaylist = function (playlistUrl) {
     console.log('processPlaylist:' + playlistUrl);
