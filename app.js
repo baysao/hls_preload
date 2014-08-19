@@ -24,18 +24,38 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 //
 
 
+var processUrl = function (url) {
+    var myurl = url.parse(url).pathname;
+    console.log('myurl:' + myurl);
+    if (/\.m3u8$/.test(myurl)) {
+        var mydir = path.dirname(myurl);
+        var urlmd5 = md5(mydir);
+        if (!queue[urlmd5]) {
+            var origurl = host + myurl;
+            queue[urlmd5] = hls(origurl);
+        }
+        queue[urlmd5].playlist(function () {
+        });
+    }
+}
+
 Tail = require('tail').Tail;
 
 tail = new Tail("/home/log/nginx/access/media.m3u8.movideo.access.log");
 
-tail.on("line", function(data) {
+tail.on("line", function (data) {
     console.log(data);
-    parser.parseLine(data, function(row){
+    parser.parseLine(data, function (row) {
         console.log(row);
+        var requestArr = row.split(' ');
+        if (requestArr[0] == 'GET') {
+            var path = requestArr[1];
+            processUrl(path);
+        }
     })
 });
 
-tail.on("error", function(error) {
+tail.on("error", function (error) {
     console.log('ERROR: ', error);
 });
 
