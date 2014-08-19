@@ -26,7 +26,7 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 
 var processUrl = function (requestUrl) {
     var myurl = url.parse(requestUrl).pathname;
-    console.log('myurl:' + myurl);
+//    console.log('myurl:' + myurl);
     if (/\.m3u8$/.test(myurl)) {
         var mydir = path.dirname(myurl);
         var urlmd5 = md5(mydir);
@@ -44,9 +44,9 @@ Tail = require('tail').Tail;
 tail = new Tail("/home/log/nginx/access/media.m3u8.movideo.access.log");
 
 tail.on("line", function (data) {
-    console.log(data);
+//    console.log(data);
     parser.parseLine(data, function (row) {
-        console.log(row);
+//        console.log(row);
         if (row.request && row.request.length > 0) {
             var requestArr = row.request.split(' ');
             if (requestArr[0] == 'GET') {
