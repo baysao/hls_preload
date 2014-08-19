@@ -37,7 +37,7 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 //}
 var processPlaylist = function (playlistUrl) {
     console.log('processPlaylist:' + playlistUrl);
-    request(playlistUrl, function (error, response, body) {
+    request('http://www.google.com', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body) // Print the google web page.
         }
