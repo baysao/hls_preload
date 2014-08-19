@@ -4,30 +4,43 @@ var crypto = require('crypto');
 var path = require('path');
 var url = require('url');
 var queue = {};
+var host = 'http://media.movideo.us';
 var md5 = function (str) {
     return crypto.createHash('md5').update(str).digest('hex');
 };
 
+Tail = require('tail').Tail;
 
-var server = http.createServer(function (request, response) {
-    var myurl = url.parse(request.url).pathname;
-//    console.log('myurl:' + myurl);
+tail = new Tail("/home/log/nginx/access/media.m3u8.movideo.access.log");
+
+tail.on("line", function(data) {
+    console.log(data);
+});
+
+tail.on("error", function(error) {
+    console.log('ERROR: ', error);
+});
 
 
-    if (/\.m3u8$/.test(myurl)) {
-        var mydir = path.dirname(myurl);
-        var urlmd5 = md5(mydir);
-        if(!queue[urlmd5]) {
-            var origurl = 'http://media.movideo.us' + myurl;
-            queue[urlmd5] = hls(origurl, {max: 2});
-        }
-
-        queue[urlmd5].playlist(function (err, pl) {
-            response.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
-            response.end(pl);
-        });
-        console.log(Object.keys(queue));
-    }
+//var server = http.createServer(function (request, response) {
+//    var myurl = url.parse(request.url).pathname;
+////    console.log('myurl:' + myurl);
+//
+//
+//    if (/\.m3u8$/.test(myurl)) {
+//        var mydir = path.dirname(myurl);
+//        var urlmd5 = md5(mydir);
+//        if(!queue[urlmd5]) {
+//            var origurl = + myurl;
+//            queue[urlmd5] = hls(origurl, {max: 2});
+//        }
+//
+//        queue[urlmd5].playlist(function (err, pl) {
+//            response.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
+//            response.end(pl);
+//        });
+//        console.log(Object.keys(queue));
+//    }
 //    else {
 //        console.log('.ts');
 //        var mydir = path.basename(myurl);
@@ -36,6 +49,6 @@ var server = http.createServer(function (request, response) {
 //        response.setHeader('Content-Type', 'video/mp2s');
 //        stream.pipe(response);
 //    }
-});
+//});
 
-server.listen(8080);
+//server.listen(80);
