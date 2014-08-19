@@ -36,9 +36,11 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 //    });
 //}
 var next = function(myurls){
-    myurls.splice(0, 1);
-    if (myurls && myurls.length > 0)
-        processTS(myurls);
+    setTimeout(function(){
+        myurls.splice(0, 1);
+        if (myurls && myurls.length > 0)
+            processTS(myurls);
+    },5000);
 }
 var processTS = function (myurls) {
     var url = myurls[0];
@@ -62,40 +64,13 @@ var processPlaylist = function (playlistUrl) {
             });
             var myurls = _.compact(urls);
             processTS(myurls);
-//            _.each(myurls, function (url) {
-//                console.log(url);
-//
-//            });
         }
     })
-
-//    request(playlistUrl, function (err, response) {
-//        console.log('done request:' + playlistUrl);
-//        if (err || response.statusCode !== 200) return false;
-//
-//        var body = response.body.toString().trim();
-//
-//        var urls = body.split('\n').map(function (line) {
-//            if (line[0] === '#') return;
-//            return resolveUrl(playlistUrl, line);
-//        });
-//        var myurls = _.compact(urls);
-////        _.each(myurls, function (url) {
-////            console.log(url);
-//////                request(url, function (err, response) {
-//////
-//////                })
-////        })
-//        console.log(myurls[0]);
-//        console.log(myurls.length);
-////        processTS(myurls);
-//    });
 }
 var processUrl = function (requestUrl) {
     var myurl = url.parse(requestUrl).pathname;
 
     if (/\.m3u8$/.test(myurl)) {
-
         var mydir = path.dirname(myurl);
         var urlmd5 = md5(mydir);
         if (!queue[urlmd5]) {
