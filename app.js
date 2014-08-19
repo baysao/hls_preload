@@ -47,8 +47,11 @@ var processPlaylist = function (playlistUrl) {
             var myurls = _.compact(urls);
             _.each(myurls, function(url){
                 console.log(url);
-                request(url, function (err, response) {
-                })
+                setTimeout(function(){
+                    request(url, function (err, response) {
+                    })
+                },2000);
+
             });
         }
     })
