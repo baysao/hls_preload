@@ -47,10 +47,12 @@ tail.on("line", function (data) {
     console.log(data);
     parser.parseLine(data, function (row) {
         console.log(row);
-        var requestArr = row.split(' ');
-        if (requestArr[0] == 'GET') {
-            var path = requestArr[1];
-            processUrl(path);
+        if (row.request && row.request.length > 0) {
+            var requestArr = row.request.split(' ');
+            if (requestArr[0] == 'GET') {
+                var path = requestArr[1];
+                processUrl(path);
+            }
         }
     })
 });
