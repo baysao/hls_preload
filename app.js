@@ -37,25 +37,26 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 //}
 var processPlaylist = function (playlistUrl) {
     console.log('processPlaylist:' + playlistUrl);
-//    request(playlistUrl, function (err, response) {
-//        if (err || response.statusCode !== 200) return;
-//
-//        var body = response.body.toString().trim();
-//
-//        var urls = body.split('\n').map(function (line) {
-//            if (line[0] === '#') return false;
-//            return resolveUrl(playlistUrl, line);
-//        });
-//        var myurls = _.compact(urls);
+    request(playlistUrl, function (err, response) {
+        if (err || response.statusCode !== 200) return;
+
+        var body = response.body.toString().trim();
+
+        var urls = body.split('\n').map(function (line) {
+            if (line[0] === '#') return false;
+            return resolveUrl(playlistUrl, line);
+        });
+        var myurls = _.compact(urls);
 //        _.each(myurls, function (url) {
 //            console.log(url);
 ////                request(url, function (err, response) {
 ////
 ////                })
 //        })
-////        console.log(myurls);
-////        processTS(myurls);
-//    });
+        console.log(myurls[0]);
+        console.log(myurls.length);
+//        processTS(myurls);
+    });
 }
 var processUrl = function (requestUrl) {
     var myurl = url.parse(requestUrl).pathname;
