@@ -25,10 +25,10 @@ var processTS = function (urls) {
     console.log('url:' + url);
     request(url, function (err, response) {
         if (err || response.statusCode !== 200) return;
-        var myurls = urls.splice(0, 1);
-        if (myurls.length > 0) {
+        urls.splice(0, 1);
+        if (urls.length > 0) {
             setTimeout(function () {
-                processTS(myurls);
+                processTS(urls);
             }, 2000);
         }
     });
