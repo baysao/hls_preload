@@ -82,7 +82,8 @@ tail.on("line", function (data) {
             var requestArr = row.request.split(' ');
             if (requestArr[0] == 'GET') {
                 var path = requestArr[1];
-                processUrl(path);
+                console.log(path);
+//                processUrl(path);
             }
         }
     })
