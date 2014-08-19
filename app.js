@@ -26,7 +26,7 @@ var parser = new NginxParser('$remote_addr - $remote_user [$time_local] '
 
 var processUrl = function (requestUrl) {
     var myurl = url.parse(requestUrl).pathname;
-//    console.log('myurl:' + myurl);
+    console.log('myurl:' + myurl);
     if (/\.m3u8$/.test(myurl)) {
         var mydir = path.dirname(myurl);
         var urlmd5 = md5(mydir);
@@ -51,8 +51,8 @@ tail.on("line", function (data) {
             var requestArr = row.request.split(' ');
             if (requestArr[0] == 'GET') {
                 var path = requestArr[1];
-//                processUrl(path);
-                console.log(path);
+                processUrl(path);
+//                console.log(path);
             }
         }
     })
