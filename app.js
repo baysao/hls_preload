@@ -108,6 +108,7 @@ tail_ts = new Tail("/home/log/nginx/access/media.ts.movideo.access.log");
 
 tail_ts.on("line", function (data) {
     parser.parseLine(data, function (row) {
+        console.log(row);
         if (row.request && row.request.length > 0) {
             var requestArr = row.request.split(' ');
             if (requestArr[0] == 'GET') {
