@@ -111,7 +111,7 @@ tail_ts.on("line", function (data) {
                 var id = _.last(mypathArr).split('.')[0];
                 console.log('id:' + id);
                 var newid = +id + 1;
-                var newpathArr = splice(mypathArr, mypathArr.length - 1, newid + '.ts');
+                var newpathArr = mypathArr.splice(mypathArr, mypathArr.length - 1, newid + '.ts');
                 var newpath = newpathArr.join('_');
                 console.log('newpath:' + newpath);
 //                processUrl(path);
