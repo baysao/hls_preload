@@ -106,14 +106,24 @@ tail_ts.on("line", function (data) {
             var requestArr = row.request.split(' ');
             if (requestArr[0] == 'GET') {
                 var path = requestArr[1];
-                console.log(path);
-                var mypathArr = path.split('_');
-                var id = _.last(mypathArr).split('.')[0];
-                console.log('id:' + id);
-                var newid = +id + 1;
-                mypathArr.splice(mypathArr, mypathArr.length - 1, newid + '.ts');
-                var newpath = mypathArr.join('_');
-                console.log('newpath:' + newpath);
+                console.log('ts:' + path);
+
+                var myurl = url.parse(path).pathname;
+
+                if (/\.ts$/.test(myurl)) {
+                    var mydir = path.dirname(myurl);
+                    var urlmd5 = md5(mydir);
+                    if (queue[urlmd5]) {
+                        console.log(queue[urlmd5])
+                    }
+                }
+//                var mypathArr = path.split('_');
+//                var id = _.last(mypathArr).split('.')[0];
+//                console.log('id:' + id);
+//                var newid = +id + 1;
+//                mypathArr.splice(mypathArr, mypathArr.length - 1, newid + '.ts');
+//                var newpath = mypathArr.join('_');
+//                console.log('newpath:' + newpath);
 //                processUrl(path);
             }
         }
