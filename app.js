@@ -53,34 +53,34 @@ var processTS = function (myurls) {
         next(myurls);
     }
 }
-
-var processPlaylist = function (playlistUrl) {
-    console.log('processPlaylist:' + playlistUrl);
-    request(playlistUrl, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            console.log(body) // Print the google web page.
-            var urls = body.split('\n').map(function (line) {
-                if (line[0] === '#') return;
-                return resolveUrl(playlistUrl, line);
-            });
-            queue[urlmd5] = _.compact(urls);
-        }
-    })
-}
-var processUrl = function (requestUrl) {
-    var myurl = url.parse(requestUrl).pathname;
-
-    if (/\.m3u8$/.test(myurl)) {
-        var mydir = path.dirname(myurl);
-        var urlmd5 = md5(mydir);
-        if (!queue[urlmd5]) {
-            queue[urlmd5] = 1;
-            console.log('processUrl:' + myurl);
-            var origurl = host + myurl;
-            processPlaylist(origurl);
-        }
-    }
-}
+//
+//var processPlaylist = function (playlistUrl) {
+//    console.log('processPlaylist:' + playlistUrl);
+//    request(playlistUrl, function (error, response, body) {
+//        if (!error && response.statusCode == 200) {
+//            console.log(body) // Print the google web page.
+//            var urls = body.split('\n').map(function (line) {
+//                if (line[0] === '#') return;
+//                return resolveUrl(playlistUrl, line);
+//            });
+//            queue[urlmd5] = _.compact(urls);
+//        }
+//    })
+//}
+//var processUrl = function (requestUrl) {
+//    var myurl = url.parse(requestUrl).pathname;
+//
+//    if (/\.m3u8$/.test(myurl)) {
+//        var mydir = path.dirname(myurl);
+//        var urlmd5 = md5(mydir);
+//        if (!queue[urlmd5]) {
+//            queue[urlmd5] = 1;
+//            console.log('processUrl:' + myurl);
+//            var origurl = host + myurl;
+//            processPlaylist(origurl);
+//        }
+//    }
+//}
 
 Tail = require('tail').Tail;
 
@@ -122,7 +122,7 @@ tail_ts.on("line", function (data) {
                 var newpath = mypathArr.join('_');
                 console.log('newpath:' + newpath);
                 var preloadArr = [];
-                preloadArr.push(newpath);
+                preloadArr.push(host + newpath);
                 processTS(preloadArr);
 //                processUrl(path);
             }
