@@ -53,6 +53,7 @@ var processTS = function (myurls) {
         next(myurls);
     }
 }
+
 var processPlaylist = function (playlistUrl) {
     console.log('processPlaylist:' + playlistUrl);
     request(playlistUrl, function (error, response, body) {
@@ -120,7 +121,10 @@ tail_ts.on("line", function (data) {
                 mypathArr.splice(mypathArr.length - 1, 1, newid + '.ts');
                 var newpath = mypathArr.join('_');
                 console.log('newpath:' + newpath);
-                processUrl(path);
+                var preloadArr = [];
+                preloadArr.push(newpath);
+                processTS(preloadArr);
+//                processUrl(path);
             }
         }
     })
