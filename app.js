@@ -105,10 +105,10 @@ tail_ts.on("line", function (data) {
         if (row.request && row.request.length > 0) {
             var requestArr = row.request.split(' ');
             if (requestArr[0] == 'GET') {
-                var path = requestArr[1];
-                console.log('ts:' + path);
+                var mypath = requestArr[1];
+                console.log('ts:' + mypath);
 
-                var myurl = url.parse(path).pathname;
+                var myurl = url.parse(mypath).pathname;
 
                 if (/\.ts$/.test(myurl)) {
                     var mydir = path.dirname(myurl);
