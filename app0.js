@@ -62,8 +62,8 @@ var processPlaylist = function (playlistUrl) {
                 if (line[0] === '#') return;
                 return resolveUrl(playlistUrl, line);
             });
-            queue[urlmd5] = _.compact(urls);
-//            processTS(myurls);
+            var myurls = _.compact(urls);
+            processTS(myurls);
         }
     })
 }
@@ -98,31 +98,7 @@ tail.on("line", function (data) {
         }
     })
 });
-tail_ts = new Tail("/home/log/nginx/access/media.ts.movideo.access.log");
 
-tail_ts.on("line", function (data) {
-    parser.parseLine(data, function (row) {
-        if (row.request && row.request.length > 0) {
-            var requestArr = row.request.split(' ');
-            if (requestArr[0] == 'GET') {
-                var path = requestArr[1];
-                console.log(path);
-                var mypathArr = path.split('_');
-                var id = _.last(mypathArr).split('.')[0];
-                console.log('id:' + id);
-                var newid = +id + 1;
-                var newpathArr = splice(mypathArr, mypathArr.length - 1, newid + '.ts');
-                var newpath = newpathArr.join('_');
-                console.log('newpath:' + newpath);
-//                processUrl(path);
-            }
-        }
-    })
-});
-
-tail_ts.on("error", function (error) {
-    console.log('ERROR: ', error);
-});
 tail.on("error", function (error) {
     console.log('ERROR: ', error);
 });
